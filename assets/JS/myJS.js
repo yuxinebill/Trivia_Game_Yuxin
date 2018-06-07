@@ -36,6 +36,9 @@ $(document).ready(function() {
 
 	];
 
+	var wrongCounter = 0;
+	var rightCounter = 0;
+	var allQuestions = myData.length;
 
 	// console.log(myData.find(x => x.id == 3));
 
@@ -55,11 +58,12 @@ $(document).ready(function() {
 		//list all answers on screen
 		for (k=0; k<myData[i].answers.length; k++) {
 			var eachAnswer = myData[i].answers[k];
-			console.log(eachAnswer)
 
-			$("<div>").addClass("form-check form-group").addClass(eachAnswer).appendTo($(".answers"));
-			$("." + eachAnswer).append($("<input type='radio'/>").addClass("form-check-input").attr("value", eachAnswer));
-			$("." + eachAnswer).append($("<label>").addClass("form-check-label").text(eachAnswer));
+			$("<div>").addClass("form-check form-group").attr("id", eachAnswer).appendTo($(".answers"));
+			var x = document.getElementById(eachAnswer);
+
+			$(x).append($("<input type='radio'/>").addClass("form-check-input").attr("value", eachAnswer));
+			$(x).append($("<label>").addClass("form-check-label").text(eachAnswer));
 		}
 		//when user check the checkbox, then run the function
 		$("input").change(function() {			
@@ -72,21 +76,33 @@ $(document).ready(function() {
 		        if (this.value == myData[i].rightAnswer ) {
 		        	$(".answers").text("Yeah, you know me!").append('<br>');
 		        	nextButton ();
+		        	rightCounter ++;
 		        } else {
 		        	$(".answers").text("The answer is " + myData[i].rightAnswer ).append('<br>');
 		        	nextButton ();
+		        	wrongCounter ++;
 		        }
 		    }
 		    i++;
 		});		
 	};
 
+	function countResult() {
+		$(".answers").append("You have answered " + allQuestions + " questions.").append('<br>');
+		$(".answers").append(wrongCounter + " wrong").append('<br>');
+		$(".answers").append(rightCounter + " right");		
+	}
+
 	$(".startButton").on("click", startFunction);
 
 	$(document).on("click", ".nextButton", function(){
 		$(this).remove();
 		$(".answers").empty();
-		displayQuestion ();
+		if (i < myData.length) {			
+			displayQuestion ();
+		} else (
+			countResult()
+		)
 	});
 
 });
