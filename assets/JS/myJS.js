@@ -31,7 +31,7 @@ $(document).ready(function() {
 			"question" : "How many cats does Yuxin have?",
 			"answers"  : ["0", "1", "2", "3"],
 			"rightAnswer" : "1"
-		}
+		},
 
 		{	"id" : 5,
 			"question" : "Which university Yuxin graduated from?",
@@ -147,7 +147,7 @@ $(document).ready(function() {
 	function countResult() {
 
 		//display how many questions the user ansswered
-		$(".question").text("You have answered " + allQuestions + " questions.").append('<br>');
+		$(".question").text("You have answered " + allQuestions + " questions").append('<br>');
 		//display wrong answer counter
 		$(".answers").append(wrongCounter + " wrong").append('<br>');
 		//display right answer counter
