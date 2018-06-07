@@ -63,12 +63,14 @@ $(document).ready(function() {
 
 	//write a next button into HTML
 	function nextButton () {
-		$("<button>").addClass("btn btn-info mt-5 nextButton").attr("type", "button").appendTo($(".answers")).text("NEXT >");
+		$("<button>").addClass("btn btn-info mt-3 nextButton").attr("type", "button").appendTo($(".answers")).text("NEXT >");
 	};
 
 	//show the right answer on the screen
 	function showRightAnswer () {
 		$(".answers").text("The answer is " + myData[i].rightAnswer ).append('<br>');
+		//display sad image
+		$(".answers").append($("<img>").attr("src", "assets/imgs/no.gif").addClass("mt-3")).append('<br>');
 		//show the next button on screen
     	nextButton ();
     	// counter the wrong answer +1
@@ -134,6 +136,7 @@ $(document).ready(function() {
 		    	//if the user choose wrong ones, then show "The answer is xxx", and show next button
 		        if (this.value == myData[i].rightAnswer ) {
 		        	$(".answers").text("Yeah, you know me!").append('<br>');
+		        	$(".answers").append($("<img>").attr("src", "assets/imgs/yes.gif").addClass("mt-3")).append('<br>');
 		        	nextButton ();
 		        	rightCounter ++;
 		        } else {
@@ -166,8 +169,7 @@ $(document).ready(function() {
 		if (i < myData.length) {			
 			displayQuestion ();
 		} else (
-
-			countResult()
+			countResult ()
 		)
 	});
 });
