@@ -33,6 +33,12 @@ $(document).ready(function() {
 			"rightAnswer" : "1"
 		}
 
+		{	"id" : 5,
+			"question" : "Which university Yuxin graduated from?",
+			"answers"  : ["Rutgers", "Columbia", "George Mason", "NYU"],
+			"rightAnswer" : "George Mason"
+		}
+
 	];
 
 	// at end of the game, it will show how many wrong/right answers the user gave
