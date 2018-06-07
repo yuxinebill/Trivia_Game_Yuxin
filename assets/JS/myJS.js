@@ -145,8 +145,9 @@ $(document).ready(function() {
 
 	//display the final result on screen
 	function countResult() {
+
 		//display how many questions the user ansswered
-		$(".answers").append("You have answered " + allQuestions + " questions.").append('<br>');
+		$(".question").text("You have answered " + allQuestions + " questions.").append('<br>');
 		//display wrong answer counter
 		$(".answers").append(wrongCounter + " wrong").append('<br>');
 		//display right answer counter
@@ -165,6 +166,7 @@ $(document).ready(function() {
 		if (i < myData.length) {			
 			displayQuestion ();
 		} else (
+
 			countResult()
 		)
 	});
