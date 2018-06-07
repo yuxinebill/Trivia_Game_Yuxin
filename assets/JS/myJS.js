@@ -44,6 +44,7 @@ $(document).ready(function() {
 	// at end of the game, it will show how many wrong/right answers the user gave
 	var wrongCounter = 0;
 	var rightCounter = 0;
+	var dontAnswerCounter = 0;
 
 	//at the end of the game, how many questions the user answered = how many elements in myData
 	var allQuestions = myData.length;
@@ -72,9 +73,7 @@ $(document).ready(function() {
 		//display sad image
 		$(".answers").append($("<img>").attr("src", "assets/imgs/no.gif").addClass("mt-3")).append('<br>');
 		//show the next button on screen
-    	nextButton ();
-    	// counter the wrong answer +1
-    	wrongCounter ++;
+    	nextButton ();   	
 	};
 
 	var intervalId;
@@ -106,6 +105,7 @@ $(document).ready(function() {
       	//stop timer
         stop();
         alert("Time up!")
+        dontAnswerCounter ++;
         //display the right answer on screen
         showRightAnswer ();	
       }
@@ -141,6 +141,8 @@ $(document).ready(function() {
 		        	rightCounter ++;
 		        } else {
 		        	showRightAnswer ();
+		        	// counter the wrong answer +1
+    				wrongCounter ++;
 		        }
 		    }		    
 		});		
@@ -153,7 +155,9 @@ $(document).ready(function() {
 		//display wrong answer counter
 		$(".answers").append(wrongCounter + " wrong").append('<br>');
 		//display right answer counter
-		$(".answers").append(rightCounter + " right");		
+		$(".answers").append(rightCounter + " right").append('<br>');
+		//display time out counter
+		$(".answers").append(dontAnswerCounter + " no answer");		
 	};
 
 	//create a restart button
@@ -166,6 +170,7 @@ $(document).ready(function() {
 		i = 0;
 		wrongCounter = 0;
 		rightCounter = 0;
+		dontAnswerCounter = 0;
 		$(".answers").empty();
 		displayQuestion ();
 	});
