@@ -147,30 +147,45 @@ $(document).ready(function() {
 	};
 
 	//display the final result on screen
-	function countResult() {
-
+	function countResult () {
 		//display how many questions the user ansswered
 		$(".question").text("You have answered " + allQuestions + " questions").append('<br>');
 		//display wrong answer counter
 		$(".answers").append(wrongCounter + " wrong").append('<br>');
 		//display right answer counter
 		$(".answers").append(rightCounter + " right");		
-	}
+	};
+
+	//create a restart button
+	function restartButton () {
+		$("<button>").addClass("btn btn-info mt-3 restartButton").attr("type", "button").appendTo($(".answers")).text("Play Again");
+	};
+
+	//click restart button to replay the game
+	$(document).on("click", ".restartButton", function(){
+		i = 0;
+		wrongCounter = 0;
+		rightCounter = 0;
+		$(".answers").empty();
+		displayQuestion ();
+	});
 
 	//when click the start button run the fuctoin
 	$(".startButton").on("click", startFunction);
 
 	//when click next button, run the fuction
-	$(document).on("click", ".nextButton", function(){
+	$(document).on("click", ".nextButton",  function () {
 		//index of myData +1
 		i++;
 		$(this).remove();
 		$(".answers").empty();
 		if (i < myData.length) {			
 			displayQuestion ();
-		} else (
-			countResult ()
-		)
+		} else {
+			countResult ();
+			$(".answers").append("<br>");
+			restartButton ();
+		}
 	});
 });
 
