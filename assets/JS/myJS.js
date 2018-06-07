@@ -42,11 +42,18 @@ $(document).ready(function() {
 	var i = 0 ;
 
 	function displayQuestion () {
-		 $(".question").text(myData[i].question);
-		 
-		 for (k=0; k<myData[i].answers.length; k++) {
-			$(".answers").append(myData[i].answers[k] + "<br/>");
+		//list question on screen
+		$(".question").text(myData[i].question);
+
+		//list all answers on screen
+		for (k=0; k<myData[i].answers.length; k++) {
+			var eachAnswer = myData[i].answers[k];
+
+			$("<div>").addClass("form-check form-group").addClass(eachAnswer).appendTo($(".answers"));
+			$("." + eachAnswer).append($("<input type='radio'/>").addClass("form-check-input"));
+			$("." + eachAnswer).append($("<label>").addClass("form-check-label").text(eachAnswer));
 		}
+
 		i++;
 	};
 
