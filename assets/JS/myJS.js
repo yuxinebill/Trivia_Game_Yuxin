@@ -1,7 +1,6 @@
 $(document).ready(function() {
 
-	//object of all questions 
-
+	//object of all questions and answers
 	var myData = [
 
 		{	"id" : 0,
@@ -36,21 +35,77 @@ $(document).ready(function() {
 
 	];
 
+	// at end of the game, it will show how many wrong/right answers the user gave
 	var wrongCounter = 0;
 	var rightCounter = 0;
+
+	//at the end of the game, how many questions the user answered = how many elements in myData
 	var allQuestions = myData.length;
 
-	// console.log(myData.find(x => x.id == 3));
+	// i is the index of the element in array myData
+	var i = 0 ;	
 
-	//startFunction will make the start button invisible and display the first question on the page
+	//startFunction will make 	
 	function startFunction () {
+		//the start button invisible 
 		$(this).remove();
+		//the timer start running
+		run();
+		//display the first question on the page
 		displayQuestion ();
 	};
 
-	var i = 0 ;
+	//write a next button into HTML
+	function nextButton () {
+		$("<button>").addClass("btn btn-info mt-5 nextButton").attr("type", "button").appendTo($(".answers")).text("NEXT >");
+	};
 
+	//show the right answer on the screen
+	function showRightAnswer () {
+		$(".answers").text("The answer is " + myData[i].rightAnswer ).append('<br>');
+		//show the next button on screen
+    	nextButton ();
+    	// counter the wrong answer +1
+    	wrongCounter ++;
+	};
+
+	var intervalId;
+
+	//setup 15 seconds for each question
+	var number = 15;
+
+	//run the timer
+	function run() {
+		$("#show-number").text("15");
+		number = 15;
+		clearInterval(intervalId);
+		intervalId = setInterval(decrement, 1000);
+    }
+
+    //stop the timer
+    function stop() {
+      clearInterval(intervalId);      
+	}	
+   
+	function decrement() {
+      number--;
+      //Show the number in the #show-number tag.
+      $("#show-number").text(number);
+      //Once number hits zero...
+      if (number === 0) {
+      	//make the number invisible
+      	$("#show-number").empty();
+      	//stop timer
+        stop();
+        alert("Time up!")
+        //display the right answer on screen
+        showRightAnswer ();	
+      }
+    }	    
+    
 	function displayQuestion () {
+
+		run ();
 
 		//list question on screen
 		$(".question").text(myData[i].question);
@@ -58,19 +113,17 @@ $(document).ready(function() {
 		//list all answers on screen
 		for (k=0; k<myData[i].answers.length; k++) {
 			var eachAnswer = myData[i].answers[k];
-
 			$("<div>").addClass("form-check form-group").attr("id", eachAnswer).appendTo($(".answers"));
 			var x = document.getElementById(eachAnswer);
-
 			$(x).append($("<input type='radio'/>").addClass("form-check-input").attr("value", eachAnswer));
 			$(x).append($("<label>").addClass("form-check-label").text(eachAnswer));
 		}
+
 		//when user check the checkbox, then run the function
-		$("input").change(function() {			
-		    if(this.checked) {
-		    	function nextButton () {
-		    		$("<button>").addClass("btn btn-info mt-5 nextButton").attr("type", "button").appendTo($(".answers")).text("NEXT >");
-		    	}
+		$("input").change(function() {
+			stop();	
+			$("#show-number").empty();		
+		    if(this.checked) {		    	
 		    	//if the user choose the right answer, then show "Yeah, you know me!" and show next button
 		    	//if the user choose wrong ones, then show "The answer is xxx", and show next button
 		        if (this.value == myData[i].rightAnswer ) {
@@ -78,24 +131,29 @@ $(document).ready(function() {
 		        	nextButton ();
 		        	rightCounter ++;
 		        } else {
-		        	$(".answers").text("The answer is " + myData[i].rightAnswer ).append('<br>');
-		        	nextButton ();
-		        	wrongCounter ++;
+		        	showRightAnswer ();
 		        }
-		    }
-		    i++;
+		    }		    
 		});		
 	};
 
+	//display the final result on screen
 	function countResult() {
+		//display how many questions the user ansswered
 		$(".answers").append("You have answered " + allQuestions + " questions.").append('<br>');
+		//display wrong answer counter
 		$(".answers").append(wrongCounter + " wrong").append('<br>');
+		//display right answer counter
 		$(".answers").append(rightCounter + " right");		
 	}
 
+	//when click the start button run the fuctoin
 	$(".startButton").on("click", startFunction);
 
+	//when click next button, run the fuction
 	$(document).on("click", ".nextButton", function(){
+		//index of myData +1
+		i++;
 		$(this).remove();
 		$(".answers").empty();
 		if (i < myData.length) {			
@@ -104,6 +162,7 @@ $(document).ready(function() {
 			countResult()
 		)
 	});
-
 });
+
+
 
