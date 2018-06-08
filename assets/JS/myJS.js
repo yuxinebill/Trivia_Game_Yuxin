@@ -112,7 +112,7 @@ $(document).ready(function() {
     }	    
     
 	function displayQuestion () {
-
+		//make the timer run
 		run ();
 
 		//list question on screen
@@ -151,7 +151,7 @@ $(document).ready(function() {
 	//display the final result on screen
 	function countResult () {
 		//display how many questions the user ansswered
-		$(".question").text("You have answered " + allQuestions + " questions").append('<br>');
+		$(".question").text("Total " + allQuestions + " questions").append('<br>');
 		//display wrong answer counter
 		$(".answers").append(wrongCounter + " wrong").append('<br>');
 		//display right answer counter
@@ -188,6 +188,7 @@ $(document).ready(function() {
 			displayQuestion ();
 		} else {
 			countResult ();
+			//give some space between result and button
 			$(".answers").append("<br>");
 			restartButton ();
 		}
